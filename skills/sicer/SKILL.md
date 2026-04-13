@@ -1,9 +1,9 @@
 ---
-name: sicer-architet-agent
+name: sicer
 description: Use this skill when you need to analyze a multi-module workspace, identify the right module to modify, or plan a safe cross-module change with the sicer-architet-agent MCP tools.
 ---
 
-When this skill is relevant, prefer the MCP tools exposed by the standalone `sicer-architet-agent` server.
+When this skill is relevant, prefer the MCP tools exposed by the standalone `sicer` MCP server backed by the `sicer-architet-agent` executable.
 
 Use them in this order:
 

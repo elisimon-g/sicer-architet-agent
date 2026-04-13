@@ -30,8 +30,9 @@ curl -fsSL https://raw.githubusercontent.com/elisimon-g/sicer-architet-agent/mai
 The installer:
 
 - installs the `sicer-architet-agent` CLI
-- installs the optional Copilot skill in `~/.copilot/skills/sicer-architet-agent`
-- prints the final `/mcp add` step for Copilot CLI
+- installs the optional Copilot skill in `~/.copilot/skills/sicer`
+- auto-registers the MCP server in `~/.copilot/mcp-config.json`
+- leaves Copilot CLI ready to use after a restart or `/skills reload`
 
 ### Option 1: local editable install
 
@@ -57,9 +58,7 @@ The server uses **STDIO** transport for MCP hosts.
 
 ## Add it to GitHub Copilot CLI
 
-Use `/mcp add` and configure a stdio server that launches the installed command.
-
-Example command:
+The installer auto-configures Copilot CLI with a `sicer` MCP server that launches:
 
 ```text
 sicer-architet-agent
@@ -77,13 +76,8 @@ Example config snippet:
 {
   "mcpServers": {
     "architect-agent": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/absolute/path/to/sicer-architet-agent",
-        "run",
-        "sicer-architet-agent"
-      ]
+      "command": "sicer-architet-agent",
+      "args": []
     }
   }
 }
@@ -91,7 +85,7 @@ Example config snippet:
 
 ## Optional skill
 
-This repository also includes an optional skill under `skills/sicer-architet-agent`.
+This repository also includes an optional skill under `skills/sicer`.
 
 You can add it in Copilot CLI with `/skills add /absolute/path/to/sicer-architet-agent/skills`
 and reload with `/skills reload`.
@@ -99,7 +93,7 @@ and reload with `/skills reload`.
 Example prompt:
 
 ```text
-Use the /sicer-architet-agent skill to plan a safe change in this Maven monolith.
+Use /sicer to plan a safe change in this Maven monolith.
 ```
 
 ## Development
