@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sicer-architet-agent"
+version = "0.1.0"
+description = "Standalone MCP + LangGraph agent for multi-module codebase analysis."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Elisimon" }
+]
+dependencies = [
+  "langgraph>=0.2.56",
+  "mcp>=1.2.0",
+]
+
+[project.scripts]
+sicer-architet-agent = "sicer_architet_agent.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sicer_architet_agent"]
