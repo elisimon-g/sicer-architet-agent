@@ -21,6 +21,18 @@ The planning flow is orchestrated with LangGraph, but kept deterministic in the 
 
 ## Installation
 
+### One-line install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/elisimon-g/sicer-architet-agent/main/install.sh | bash
+```
+
+The installer:
+
+- installs the `sicer-architet-agent` CLI
+- installs the optional Copilot skill in `~/.copilot/skills/sicer-architet-agent`
+- prints the final `/mcp add` step for Copilot CLI
+
 ### Option 1: local editable install
 
 ```bash
