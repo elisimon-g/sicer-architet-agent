@@ -1,76 +1,76 @@
 # Sicer Architet Agent
 
-Standalone local agent for GitHub Copilot CLI built with **LangGraph** and **MCP**.
+Agent locale standalone per GitHub Copilot CLI costruito con **LangGraph** e **MCP**.
 
-It is designed for **multi-module codebases** and helps Copilot answer questions such as:
+E' pensato per **codebase multi-modulo** e aiuta Copilot a rispondere a domande come:
 
-- which module should I modify first?
-- what other modules are impacted?
-- what files should I inspect before patching?
-- what is a safe order for a cross-module change?
+- quale modulo devo modificare per primo?
+- quali altri moduli sono impattati?
+- quali file devo leggere prima di fare una patch?
+- qual e' un ordine sicuro per una modifica cross-modulo?
 
-## What it provides
+## Cosa offre
 
-This project exposes an MCP server with three initial tools:
+Questo progetto espone un server MCP con tre tool iniziali:
 
 - `detect_project_type`
 - `list_modules`
 - `plan_multimodule_change`
 
-The planning flow is orchestrated with LangGraph, but kept deterministic in the first version so it can run locally without external model calls.
+Il flusso di pianificazione e' orchestrato con LangGraph, ma nella prima versione resta deterministico cosi' da poter girare localmente senza dipendere da chiamate a modelli esterni.
 
-## Installation
+## Installazione
 
-### One-line install
+### Installazione con una riga
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/elisimon-g/sicer-architet-agent/main/install.sh | bash
 ```
 
-The installer:
+L'installer:
 
-- installs the `sicer-architet-agent` CLI
-- installs the optional Copilot skill in `~/.copilot/skills/sicer`
-- auto-registers the MCP server in `~/.copilot/mcp-config.json`
-- leaves Copilot CLI ready to use after a restart or `/skills reload`
+- installa la CLI `sicer-architet-agent`
+- installa la skill opzionale di Copilot in `~/.copilot/skills/sicer`
+- registra automaticamente il server MCP in `~/.copilot/mcp-config.json`
+- lascia Copilot CLI pronto all'uso dopo un riavvio oppure dopo `/skills reload`
 
-### Option 1: local editable install
+### Opzione 1: installazione locale editable
 
 ```bash
 cd sicer-architet-agent
 python -m pip install -e .
 ```
 
-### Option 2: run with uv
+### Opzione 2: esecuzione con uv
 
 ```bash
 cd sicer-architet-agent
 uv sync
 ```
 
-## Run locally
+## Avvio locale
 
 ```bash
 sicer-architet-agent
 ```
 
-The server uses **STDIO** transport for MCP hosts.
+Il server usa il trasporto **STDIO** per gli host MCP.
 
-## Add it to GitHub Copilot CLI
+## Integrazione con GitHub Copilot CLI
 
-The installer auto-configures Copilot CLI with a `sicer` MCP server that launches:
+L'installer configura automaticamente Copilot CLI con un server MCP chiamato `sicer` che avvia:
 
 ```text
 sicer-architet-agent
 ```
 
-If you prefer `uv`, point Copilot CLI to:
+Se preferisci `uv`, puoi puntare Copilot CLI a:
 
 ```text
 uv --directory /absolute/path/to/sicer-architet-agent run sicer-architet-agent
 ```
 
-Example config snippet:
+Esempio di configurazione:
 
 ```json
 {
@@ -83,44 +83,44 @@ Example config snippet:
 }
 ```
 
-## Optional skill
+## Skill opzionale
 
-This repository also includes an optional skill under `skills/sicer`.
+Il repository include anche una skill opzionale nella cartella `skills/sicer`.
 
-You can add it in Copilot CLI with `/skills add /absolute/path/to/sicer-architet-agent/skills`
-and reload with `/skills reload`.
+Puoi aggiungerla in Copilot CLI con `/skills add /absolute/path/to/sicer-architet-agent/skills`
+e ricaricarla con `/skills reload`.
 
-Example prompt:
+Esempio di prompt:
 
 ```text
 Use /sicer to plan a safe change in this Maven monolith.
 ```
 
-## Development
+## Sviluppo
 
-Run tests:
+Esegui i test:
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-## Tool behavior
+## Comportamento dei tool
 
 ### `detect_project_type`
 
-Inspects a workspace and summarizes the dominant build and architectural signals.
+Analizza un workspace e riassume i segnali architetturali e di build prevalenti.
 
 ### `list_modules`
 
-Parses Maven root and child `pom.xml` files and reports modules, packaging, dependencies, and quick indicators.
+Legge il `pom.xml` root e quelli dei moduli figli, riportando moduli, packaging, dipendenze e indicatori rapidi.
 
 ### `plan_multimodule_change`
 
-Builds a structured plan:
+Costruisce un piano strutturato con:
 
-- primary module
-- secondary modules
-- likely entry points
-- candidate files to inspect
-- change risks
-- recommended implementation order
+- modulo primario
+- moduli secondari
+- entry point probabili
+- file candidati da ispezionare
+- rischi della modifica
+- ordine consigliato di implementazione
